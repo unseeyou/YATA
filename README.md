@@ -1,4 +1,5 @@
-# YATA ![logo](logo.png)
+# YATA 
+![logo](logo.png)
 Yet another timetable app for SBHS
 
 
