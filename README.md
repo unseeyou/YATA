@@ -1,2 +1,2 @@
 # YATA
-Yet another timetable app
+Yet another timetable app for SBHS
