@@ -26,12 +26,12 @@ def auth_page():
 @app.route('/login')
 def login_page():
     url = "https://auth.sbhs.net.au/authorize"
-    api = OAuth2Session(client_id=APP_ID, redirect_uri="https://yata.onrender.com/auth", scope="all-ro", pkce="plain", )
+    api = OAuth2Session(client_id=APP_ID, redirect_uri="https://yata.onrender.com/auth", scope="all-ro", pkce="S256")
     auth_url, state = api.authorization_url(url)
     print(state)
     print(auth_url)
     # token = api.fetch_token(token_url="https://auth.sbhs.net.au/token")
-    return str(auth_url)
+    return redirect(auth_url)
 # https://auth.sbhs.net.au/authorize?response_type=code&client_id=01hrnv0jbne4zr0k11x45zdpcs&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth&scope=all-ro&state=rnSviYURZiQGs6A2plL5ii2gg2I3Eb
 
 
