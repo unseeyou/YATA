@@ -1,4 +1,5 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request
+from werkzeug.datastructures import MultiDict
 
 app = Flask(__name__)
 
@@ -10,6 +11,13 @@ def default():
 
 @app.route('/home')
 def homepage():
+    return render_template('home.html')
+
+
+@app.route('/auth')
+def auth():
+    querystring = request.args
+    print(querystring.get('authToken', default=None, type=str))
     return render_template('home.html')
 
 
