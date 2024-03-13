@@ -15,10 +15,10 @@ def homepage():
 
 
 @app.route('/auth')
-def auth():
+def auth_page():
     querystring = request.args
     print(querystring.get('authToken', default=None, type=str))
-    return render_template('home.html')
+    return redirect('/home')
 
 
 if __name__ == "__main__":
