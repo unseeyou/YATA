@@ -21,10 +21,18 @@ def mainpage():
     return render_template('main.html')
 
 
+@app.route('/auth')
+def auth():
+    print(request.args)
+    global auth_key
+    auth_key = request.args.get('code')
+    return redirect('/main')
+
+
 @app.route('/login')
 def login_page():
     url = "https://auth.sbhs.net.au/authorize"
-    api = OAuth2Session(client_id=APP_ID, redirect_uri="https://yata.onrender.com/auth", scope="all-ro", pkce="S256")
+    api = OAuth2Session(client_id=APP_ID, redirect_uri="https://yata.onrender.com/main", scope="all-ro", pkce="S256")
     auth_url, state = api.authorization_url(url)
     print(state)
     print(auth_url)
