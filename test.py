@@ -22,7 +22,7 @@ def homepage():
 
 @app.route('/main')
 def main_page():
-    timetable_url = API_ROOT+"timetable/daytimetable.json"
+    timetable_url = API_ROOT + "timetable/daytimetable.json"
     timetable_api_response = api.get(timetable_url)
     response = timetable_api_response.json()
     timetable = [["NO DATA FOUND"]]
@@ -35,12 +35,12 @@ def main_page():
         print(response)
     df = pd.DataFrame(data=timetable)
     df_html = df.to_html(border=0, index=False, header=False)
-    return render_template('main.html', table_html=df_html)\
+    return render_template('main.html', table_html=df_html)
 
 
 @app.route('/daily_notices')
 def daily_notices():
-    notices_url = API_ROOT+"dailynews/list.json"
+    notices_url = API_ROOT + "dailynews/list.json"
     notices_api_response = api.get(notices_url)
     response = notices_api_response.json()
     notices = response["notices"]
@@ -67,6 +67,8 @@ def login_page():
     print(state)
     print(auth_url)
     return redirect(auth_url)
+
+
 # https://auth.sbhs.net.au/authorize?response_type=code&client_id=01hrnv0jbne4zr0k11x45zdpcs&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth&scope=all-ro&state=rnSviYURZiQGs6A2plL5ii2gg2I3Eb
 
 
