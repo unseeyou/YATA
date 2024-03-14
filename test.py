@@ -43,7 +43,7 @@ def auth():
     print(request.args)
     global token
     auth_key = request.args.get('code')
-    token = api.fetch_token("https://auth.sbhs.net.au/token", code=auth_key)
+    token = api.fetch_token("https://auth.sbhs.net.au/token", code=auth_key)  # WHY THIS NO WORK >:(
     print(token)
     return redirect('/main')
 
