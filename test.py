@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, request
 from requests_oauthlib import OAuth2Session
+import pandas as pd
 import requests
 
 APP_ID = "01hrnv0jbne4zr0k11x45zdpcs"
@@ -18,7 +19,9 @@ def homepage():
 
 @app.route('/main')
 def mainpage():
-    return render_template('main.html')
+    df = pd.DataFrame(data=[[1,2],[3,4]])
+    df_html = df.to_html(border=0, header=False, index=False)
+    return render_template('main.html', table_html=df_html)
 
 
 @app.route('/auth')
