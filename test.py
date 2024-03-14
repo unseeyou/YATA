@@ -4,6 +4,9 @@ import pandas as pd
 import requests
 
 APP_ID = "01hrnv0jbne4zr0k11x45zdpcs"
+API_ROOT = "https://student.sbhs.net.au/api/"
+api = OAuth2Session(client_id=APP_ID, redirect_uri="https://yata.onrender.com/auth", scope="all-ro", pkce="S256")
+token = ''
 app = Flask(__name__)
 
 
@@ -19,23 +22,34 @@ def homepage():
 
 @app.route('/main')
 def main_page():
-    df = pd.DataFrame(data=[[1,2],[3,4]])
-    df_html = df.to_html(border=0, header=False, index=False)
+    timetable_url = API_ROOT+"timetable/bells.json"
+    timetable_api_response = api.get(timetable_url)
+    response = timetable_api_response.json()
+    bells = [["NO DATA"]]
+    if response['status'] == 'OK':
+        bells_altered = response["bellsAltered"]
+        if bells_altered:
+            bells_altered_reason = response["bellsAlteredReason"]
+        bells = response["bells"]
+        print(bells)
+    df = pd.DataFrame(data=bells)
+    df_html = df.to_html(border=0, index=False, header=False)
     return render_template('main.html', table_html=df_html)
 
 
 @app.route('/auth')
 def auth():
     print(request.args)
-    global auth_key
+    global token
     auth_key = request.args.get('code')
+    token = api.fetch_token("https://auth.sbhs.net.au/token", code=auth_key)
     return redirect('/main')
 
 
 @app.route('/login')
 def login_page():
+    global api
     url = "https://auth.sbhs.net.au/authorize"
-    api = OAuth2Session(client_id=APP_ID, redirect_uri="https://yata.onrender.com/auth", scope="all-ro", pkce="S256")
     auth_url, state = api.authorization_url(url)
     print(state)
     print(auth_url)
