@@ -35,7 +35,18 @@ def main_page():
         print(response)
     df = pd.DataFrame(data=timetable)
     df_html = df.to_html(border=0, index=False, header=False)
-    return render_template('main.html', table_html=df_html)
+    return render_template('main.html', table_html=df_html)\
+
+
+@app.route('/daily_notices')
+def daily_notices():
+    notices_url = API_ROOT+"dailynews/list.json"
+    notices_api_response = api.get(notices_url)
+    response = notices_api_response.json()
+    notices = response["notices"]
+    df = pd.DataFrame(data=notices)
+    df_html = df.to_html(border=0, index=False, header=False)
+    return render_template('daily_notices.html', daily_notices=df_html)
 
 
 @app.route('/auth')
