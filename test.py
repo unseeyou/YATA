@@ -22,16 +22,18 @@ def homepage():
 
 @app.route('/main')
 def main_page():
-    timetable_url = API_ROOT+"timetable/bells.json"
+    timetable_url = API_ROOT+"timetable/daytimetable.json"
     timetable_api_response = api.get(timetable_url)
     response = timetable_api_response.json()
-    bells = [["NO DATA FOUND"]]
+    timetable = [["NO DATA FOUND"]]
     if response['status'] == 'OK':
         bells = response["bells"]
         print(bells)
+        timetable = response["timetable"]
+        print(timetable)
     else:
         print(response)
-    df = pd.DataFrame(data=bells)
+    df = pd.DataFrame(data=timetable)
     df_html = df.to_html(border=0, index=False, header=False)
     return render_template('main.html', table_html=df_html)
 
@@ -42,6 +44,7 @@ def auth():
     global token
     auth_key = request.args.get('code')
     token = api.fetch_token("https://auth.sbhs.net.au/token", code=auth_key)
+    print(token)
     return redirect('/main')
 
 
