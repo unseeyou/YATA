@@ -25,13 +25,12 @@ def main_page():
     timetable_url = API_ROOT+"timetable/bells.json"
     timetable_api_response = api.get(timetable_url)
     response = timetable_api_response.json()
-    bells = [["NO DATA"]]
+    bells = [["NO DATA FOUND"]]
     if response['status'] == 'OK':
-        bells_altered = response["bellsAltered"]
-        if bells_altered:
-            bells_altered_reason = response["bellsAlteredReason"]
         bells = response["bells"]
         print(bells)
+    else:
+        print(response)
     df = pd.DataFrame(data=bells)
     df_html = df.to_html(border=0, index=False, header=False)
     return render_template('main.html', table_html=df_html)
