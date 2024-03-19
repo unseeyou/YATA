@@ -31,7 +31,7 @@ def main_page():
         print(bells)
         timetable = response["timetable"]
         # print(timetable)
-        subjects = timetable["subjects"]
+        subjects: dict = timetable["subjects"]
         periods: dict = timetable["timetable"]["periods"]
         routine = timetable["timetable"]["routine"]
         routine_items = routine.split(",")
@@ -51,8 +51,11 @@ def main_page():
             if period["fullTeacher"] is None:
                 period["fullTeacher"] = period["teacher"]
             # print(period["title"], period["fullTeacher"])
+            subject = subjects.get(period["year"]+period['title'])
+            if subject is None:
+                subject = {"title": period["title"]}
             day.append({"room": period['room'],
-                        "subject": subjects[period["year"]+period['title']]['title'],
+                        "subject": subject['title'],
                         "teacher": period['fullTeacher']})
         day.append({"room": '', "subject": 'End of Day', "teacher": ''})
 
