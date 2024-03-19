@@ -43,10 +43,10 @@ def main_page():
                 period = {"title": f"Lunch {item[-1]}", "fullTeacher": ""}
             else:
                 period = periods.get(item)
-            if period is None and item == "0":
+            if period is None:
                 period = {"title": "", "fullTeacher": ""}
             print(period["title"], period["fullTeacher"])
-            day.append(f"{period['title']} {'with' if period['fullTeacher'] else '', period['fullTeacher']}")
+            day.append(f"{period['title']} {period['fullTeacher']}")
 
     else:
         print(response)
