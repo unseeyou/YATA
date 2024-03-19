@@ -48,9 +48,13 @@ def main_page():
                 period = {"title": "", "fullTeacher": "", "room": ""}
             elif "SP" in period["title"]:
                 period = {"title": "Sport", "fullTeacher": "", "room": ""}
+            if period["fullTeacher"] is None:
+                period["fullTeacher"] = period["teacher"]
             # print(period["title"], period["fullTeacher"])
-            day.append(f"{period['room']} {subjects[period['title']]['title']} {period['fullTeacher']}")
-        day.append("End of day")
+            day.append({"room": period['room'],
+                        "subject": subjects[period['title']]['title'],
+                        "teacher": period['fullTeacher']})
+        day.append({"room": '', "subject": 'End of Day', "teacher": ''})
 
     else:
         print(response)
