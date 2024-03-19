@@ -26,6 +26,7 @@ def main_page():
     timetable_api_response = api.get(timetable_url)
     response = timetable_api_response.json()
     timetable = [["NO DATA FOUND"]]
+    day = []
     if response['status'] == 'OK':
         bells = response["bells"]
         # print(bells)
@@ -36,12 +37,20 @@ def main_page():
         routine = timetable["timetable"]["routine"]
         routine_items = routine.split(",")
         for item in routine_items:
-            period = periods.get(item, {"title": "No Period", "fullTeacher": "No Teacher"})
+            if "RC" in item:
+                period = {"title": "Recess", "fullTeacher": ""}
+            elif "WFL" in item:
+                period = {"title": f"Lunch {item[-1]}", "fullTeacher": ""}
+            else:
+                period = periods.get(item)
+            if period is None and item == "0":
+                period = {"title": "", "fullTeacher": ""}
             print(period["title"], period["fullTeacher"])
+            day.append(f"{period["title"]} with {period["fullTeacher"]}")
 
     else:
         print(response)
-    df = pd.DataFrame(data=timetable)
+    df = pd.DataFrame(data=day)
     df_html = df.to_html(border=0, index=False, header=False)
     return render_template('main.html', table_html=df_html)
 
