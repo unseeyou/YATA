@@ -31,6 +31,14 @@ def main_page():
         print(bells)
         timetable = response["timetable"]
         print(timetable)
+        subjects = timetable["subjects"]
+        periods: dict = timetable["timetable"]["periods"]
+        routine = timetable["timetable"]["routine"]
+        routine_items = routine.split(",")
+        for item in routine_items:
+            period = periods.get(item, __default={"title": "No Period", "fullTeacher": "No Teacher"})
+            print(period["title"], period["fullTeacher"])
+
     else:
         print(response)
     df = pd.DataFrame(data=timetable)
