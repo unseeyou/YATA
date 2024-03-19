@@ -49,7 +49,7 @@ def main_page():
             elif "SP" in period["title"]:
                 period = {"title": "Sport", "fullTeacher": "", "room": ""}
             # print(period["title"], period["fullTeacher"])
-            day.append(f"{period['room']} {period['title']} {period['fullTeacher']}")
+            day.append(f"{period['room']} {subjects[period['title']]['title']} {period['fullTeacher']}")
         day.append("End of day")
 
     else:
