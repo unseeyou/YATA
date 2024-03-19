@@ -52,7 +52,7 @@ def main_page():
                 period["fullTeacher"] = period["teacher"]
             # print(period["title"], period["fullTeacher"])
             day.append({"room": period['room'],
-                        "subject": subjects[period['title']]['title'],
+                        "subject": subjects[period["year"]+period['title']]['title'],
                         "teacher": period['fullTeacher']})
         day.append({"room": '', "subject": 'End of Day', "teacher": ''})
 
