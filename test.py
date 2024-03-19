@@ -36,7 +36,7 @@ def main_page():
         routine = timetable["timetable"]["routine"]
         routine_items = routine.split(",")
         for item in routine_items:
-            period = periods.get(item, __default={"title": "No Period", "fullTeacher": "No Teacher"})
+            period = periods.get(item, {"title": "No Period", "fullTeacher": "No Teacher"})
             print(period["title"], period["fullTeacher"])
 
     else:
