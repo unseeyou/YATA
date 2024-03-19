@@ -46,7 +46,7 @@ def main_page():
             if period is None and item == "0":
                 period = {"title": "", "fullTeacher": ""}
             print(period["title"], period["fullTeacher"])
-            day.append(f"{period["title"]} with {period["fullTeacher"]}")
+            day.append(f"{period['title']} with {period['fullTeacher']}")
 
     else:
         print(response)
