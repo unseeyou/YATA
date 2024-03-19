@@ -25,11 +25,10 @@ def main_page():
     timetable_url = API_ROOT + "timetable/daytimetable.json"
     timetable_api_response = api.get(timetable_url)
     response = timetable_api_response.json()
-    timetable = [["NO DATA FOUND"]]
     day = []
     if response['status'] == 'OK':
         bells = response["bells"]
-        # print(bells)
+        print(bells)
         timetable = response["timetable"]
         # print(timetable)
         subjects = timetable["subjects"]
@@ -37,18 +36,21 @@ def main_page():
         routine = timetable["timetable"]["routine"]
         routine_items = routine.split(",")
         for item in routine_items:
-            if "R" in item:
-                period = {"title": "Recess", "fullTeacher": ""}
+            if "R" == item:
+                period = {"title": "Recess", "fullTeacher": "", "room": ""}
             elif "WFL" in item:
-                period = {"title": f"Lunch {item[-1]}", "fullTeacher": ""}
-            elif "RC" in item:
-                period = {"title": "Roll Call", "fullTeacher": ""}
+                period = {"title": f"Lunch {item[-1]}", "fullTeacher": "", "room": ""}
+            elif "RC" == item:
+                period = {"title": "Roll Call", "fullTeacher": "", "room": ""}
             else:
                 period = periods.get(item)
             if period is None:
-                period = {"title": "", "fullTeacher": ""}
-            print(period["title"], period["fullTeacher"])
-            day.append(f"{period['title']} {period['fullTeacher']}")
+                period = {"title": "", "fullTeacher": "", "room": ""}
+            elif "SP" in period["title"]:
+                period = {"title": "Sport", "fullTeacher": "", "room": ""}
+            # print(period["title"], period["fullTeacher"])
+            day.append(f"{period['room']} {period['title']} {period['fullTeacher']}")
+        day.append("End of day")
 
     else:
         print(response)
