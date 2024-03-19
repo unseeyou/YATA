@@ -37,10 +37,12 @@ def main_page():
         routine = timetable["timetable"]["routine"]
         routine_items = routine.split(",")
         for item in routine_items:
-            if "RC" in item:
+            if "R" in item:
                 period = {"title": "Recess", "fullTeacher": ""}
             elif "WFL" in item:
                 period = {"title": f"Lunch {item[-1]}", "fullTeacher": ""}
+            elif "RC" in item:
+                period = {"title": "Roll Call", "fullTeacher": ""}
             else:
                 period = periods.get(item)
             if period is None:
