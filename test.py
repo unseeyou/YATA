@@ -28,9 +28,9 @@ def main_page():
     timetable = [["NO DATA FOUND"]]
     if response['status'] == 'OK':
         bells = response["bells"]
-        print(bells)
+        # print(bells)
         timetable = response["timetable"]
-        print(timetable)
+        # print(timetable)
         subjects = timetable["subjects"]
         periods: dict = timetable["timetable"]["periods"]
         routine = timetable["timetable"]["routine"]
