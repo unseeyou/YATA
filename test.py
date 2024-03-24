@@ -1,12 +1,11 @@
 from flask import Flask, render_template, redirect, request
 from requests_oauthlib import OAuth2Session
 import pandas as pd
-import requests
 
 APP_ID = "01hrnv0jbne4zr0k11x45zdpcs"
 API_ROOT = "https://student.sbhs.net.au/api/"
 REDIRECT_URI = "https://yata.onrender.com/auth"
-api = OAuth2Session(client_id=APP_ID, redirect_uri="http://127.0.0.1:5000/auth", scope="all-ro", pkce="S256")
+api = OAuth2Session(client_id=APP_ID, redirect_uri=REDIRECT_URI, scope="all-ro", pkce="S256")
 token = ''
 app = Flask(__name__)
 
@@ -97,9 +96,6 @@ def login_page():
     print(state)
     print(auth_url)
     return redirect(auth_url)
-
-
-# https://auth.sbhs.net.au/authorize?response_type=code&client_id=01hrnv0jbne4zr0k11x45zdpcs&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth&scope=all-ro&state=rnSviYURZiQGs6A2plL5ii2gg2I3Eb
 
 
 if __name__ == "__main__":
