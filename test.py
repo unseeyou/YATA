@@ -32,7 +32,7 @@ def main_page():
         timetable = response["timetable"]
         # print(timetable)
         subjects: dict = timetable["subjects"]
-        print(f"{subjects=}")
+        # print(f"{subjects=}")
         periods: dict = timetable["timetable"]["periods"]
         routine = timetable["timetable"]["routine"]
         routine_items = routine.split(",")
@@ -51,9 +51,10 @@ def main_page():
                 period = {"title": "Sport", "fullTeacher": "", "room": ""}
             if period["fullTeacher"] is None:
                 period["fullTeacher"] = period["teacher"]
-            print(f"{period=}")
+            # print(f"{period=}")
             subject = subjects.get(period["year"]+period['title'] if period.get("year") is not None else ""+period['title'])
-            print(f"{subject=}\n{period["year"]+period['title'] if period.get("year") is not None else ""+period['title']}")
+            # print(f"{subject=}\n{period["year"]+period['title'] if period.get("year") is not None else ""+period[
+            # 'title']}")
             if subject is None:
                 subject = {"title": period["title"]}
             day.append({"subject": f"{subject['title']} {period['fullTeacher']}",
@@ -80,11 +81,11 @@ def daily_notices():
 
 @app.route('/auth')
 def auth():
-    print(request.args)
+    # print(request.args)
     global token
     auth_key = request.args.get('code')
     token = api.fetch_token("https://auth.sbhs.net.au/token", code=auth_key)  # WHY THIS NO WORK >:(
-    print(token)
+    # print(token)
     return redirect('/main')
 
 
@@ -93,8 +94,8 @@ def login_page():
     global api
     url = "https://auth.sbhs.net.au/authorize"
     auth_url, state = api.authorization_url(url)
-    print(state)
-    print(auth_url)
+    # print(state)
+    # print(auth_url)
     return redirect(auth_url)
 
 
