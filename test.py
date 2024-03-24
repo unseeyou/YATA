@@ -5,7 +5,8 @@ import requests
 
 APP_ID = "01hrnv0jbne4zr0k11x45zdpcs"
 API_ROOT = "https://student.sbhs.net.au/api/"
-api = OAuth2Session(client_id=APP_ID, redirect_uri="https://yata.onrender.com/auth", scope="all-ro", pkce="S256")
+REDIRECT_URI = "https://yata.onrender.com/auth"
+api = OAuth2Session(client_id=APP_ID, redirect_uri="http://127.0.0.1:5000/auth", scope="all-ro", pkce="S256")
 token = ''
 app = Flask(__name__)
 
@@ -32,6 +33,7 @@ def main_page():
         timetable = response["timetable"]
         # print(timetable)
         subjects: dict = timetable["subjects"]
+        print(f"{subjects=}")
         periods: dict = timetable["timetable"]["periods"]
         routine = timetable["timetable"]["routine"]
         routine_items = routine.split(",")
@@ -50,14 +52,14 @@ def main_page():
                 period = {"title": "Sport", "fullTeacher": "", "room": ""}
             if period["fullTeacher"] is None:
                 period["fullTeacher"] = period["teacher"]
-            # print(period["title"], period["fullTeacher"])
-            subject = subjects.get(period["year"]+period['title'])
+            print(f"{period=}")
+            subject = subjects.get(period["year"]+period['title'] if period.get("year") is not None else ""+period['title'])
+            print(f"{subject=}\n{period["year"]+period['title'] if period.get("year") is not None else ""+period['title']}")
             if subject is None:
                 subject = {"title": period["title"]}
-            day.append({"room": period['room'],
-                        "subject": subject['title'],
-                        "teacher": period['fullTeacher']})
-        day.append({"room": '', "subject": 'End of Day', "teacher": ''})
+            day.append({"subject": f"{subject['title']} {period['fullTeacher']}",
+                        "room": period['room']})
+        day.append({"room": '', "subject": 'End of Day'})
 
     else:
         print(response)
