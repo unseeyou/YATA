@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request
 from requests_oauthlib import OAuth2Session
 import pandas as pd
+import sqlite3
 
 APP_ID = "01hrnv0jbne4zr0k11x45zdpcs"
 API_ROOT = "https://student.sbhs.net.au/api/"
@@ -8,6 +9,7 @@ REDIRECT_URI = "https://yata.onrender.com/auth"
 api = OAuth2Session(client_id=APP_ID, redirect_uri=REDIRECT_URI, scope="all-ro", pkce="S256")
 token = ''
 app = Flask(__name__)
+conn = sqlite3.connect('static/users.db')
 
 
 @app.route('/')
